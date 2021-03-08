@@ -12,7 +12,6 @@ import 'package:joalarm/notification.dart' as notif;
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-// import 'package:flutter_typeahead/cupertino_flutter_typeahead.dart';
 
 const fetchBackground = "fetchBackground";
 
@@ -26,7 +25,7 @@ void callbackDispatcher() {
         notif.Notification notification = new notif.Notification();
         notification.showNotificationWithoutSound(userLocation);
 
-        // await _updateUserLocation(userLocation);
+        await _updateUserLocation(userLocation);
 
         break;
     }
@@ -34,93 +33,6 @@ void callbackDispatcher() {
   });
 }
 
-// void main() => runApp(MyApp());
-
-// class MyApp extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key key, this.title}) : super(key: key);
-
-//   final String title;
-
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     // We don't need it anymore since it will be executed in background
-//     //this._getUserPosition();
-
-//   Workmanager.initialize(
-//     callbackDispatcher,
-//     isInDebugMode: true,
-//   );
-
-//   Workmanager.registerPeriodicTask(
-//     "1",
-//     fetchBackground,
-//     frequency: Duration(minutes: 15),
-//   );
-// }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(
-//               "hi",
-//               style: Theme.of(context).textTheme.headline4,
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {
-//           createUser();
-//         },
-//         child: Text('Start'), //result == 200 ? 'Done' :
-//       ),
-//     );
-//   }
-// }
-
-// BaseOptions options = new BaseOptions(
-//   baseUrl: "http://66.228.52.222:3000",
-//   connectTimeout: 10000,
-//   receiveTimeout: 3000,
-// );
-
-// void createUser() async {
-//   Response response;
-//   Dio dio = new Dio(options);
-//   String name = "Austin";
-//   String long = '121';
-//   String lat = '24';
-//   response = await dio.get("/createUser/cccc/121.5/24.5"); //$name/$long/$lat
-//   print(response.data.toString() + response.statusCode.toString());
-// }
 String serverResponse = 'Hi';
 String cnt = '0';
 
@@ -135,34 +47,9 @@ void main() => runApp(MaterialApp(
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => BodyWidget(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/second': (context) => FollowPage(),
+        '/second': (context) => SettingPage(),
       },
     ));
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Joalarm',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: Colors.deepPurple,
-//       ),
-//       home: Scaffold(
-//         appBar: AppBar(title: Text('Joalarm')),
-//         body: BodyWidget(),
-//         floatingActionButton: FloatingActionButton(
-//             child: Text('...'),
-//             onPressed: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(builder: (context) => RegisterPage()),
-//               );
-//             }),
-//       ),
-//     );
-//   }
-// }
 
 class BodyWidget extends StatefulWidget {
   @override
@@ -182,19 +69,7 @@ class BodyWidgetState extends State<BodyWidget> {
       callbackDispatcher,
       isInDebugMode: true,
     );
-    setState(() {
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      // serverResponse = 'Hi ' + prefs.getString('user_id');
-
-      // Response res = await get(
-      // "http://66.228.52.222:3000/userId/${prefs.getString('user_id')}");
-      // String userCnt = res.body.toString().split(':"')[4].split('"')[0];
-
-      // setState(() {
-      // cnt = userCnt;
-      // });
-    });
+    setState(() {});
 
     Workmanager.registerPeriodicTask(
       "1",
@@ -229,24 +104,24 @@ class BodyWidgetState extends State<BodyWidget> {
   }
 }
 
-class RegisterPage extends StatelessWidget {
+// class RegisterPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Register Page'),
+//       ),
+//       body: Center(),
+//     );
+//   }
+// }
+
+class SettingPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Register Page'),
-      ),
-      body: Center(),
-    );
-  }
+  _SettingPageState createState() => new _SettingPageState();
 }
 
-class FollowPage extends StatefulWidget {
-  @override
-  _FollowPageState createState() => new _FollowPageState();
-}
-
-class _FollowPageState extends State<FollowPage> {
+class _SettingPageState extends State<SettingPage> {
   final TextEditingController nameController = new TextEditingController();
   // final TextEditingController followeeController = new TextEditingController();
   // StreamController<List<User>> _userStream;
@@ -288,34 +163,6 @@ class _FollowPageState extends State<FollowPage> {
                       _createUser();
                     },
                     child: Icon(Icons.done)),
-                // Container(
-                //   alignment: Alignment.center,
-                //   child: Row(
-                //     children: [
-                //       Container(
-                //           width: 100,
-                //           alignment: Alignment.center,
-                //           child: TextField(
-                //             controller: followeeController,
-                //             onChanged: (val) {
-                //               _fetchUserList(val);
-                //             },
-                //             decoration: InputDecoration(
-                //               hintText: "關注姓名..",
-                //               // suffixIcon: IconButton(
-                //               //   onPressed: _createUser(),
-                //               //   icon: Icon(Icons.done),
-                //               // ),
-                //             ),
-                //           )),
-                //       ElevatedButton(
-                //           onPressed: () {
-                //             _createFollow();
-                //           },
-                //           child: Icon(Icons.done))
-                //     ],
-                //   ),
-                // ),
                 Form(
                   key: this._formKey,
                   child: Padding(
@@ -372,79 +219,8 @@ class _FollowPageState extends State<FollowPage> {
                     ),
                   ),
                 )
-                // TypeAheadField(
-                //   textFieldConfiguration: TextFieldConfiguration(
-                //     autofocus: true,
-                //   ),
-                //   suggestionsCallback: (pattern) async {
-                //     return await _fetchUserList(pattern);
-                //   },
-                //   itemBuilder: (context, suggestion) {
-                //     return ListTile(
-                //       leading: Icon(Icons.person),
-                //       title: Text(suggestion.name),
-                //       subtitle: Text('@${suggestion.id}'),
-                //     );
-                //   },
-                //   onSuggestionSelected: (suggestion) {
-                //     //   Navigator.of(context).push(MaterialPageRoute(
-                //     //       builder: (context) =>
-                //     //           Center(child: Text(suggestion['name']))));
-                //   },
-                // )
-                // Container(
-                //   child: StreamBuilder(
-                //     stream: _userStream.stream,
-                //     builder: (context, snapshot) {
-                //       switch (snapshot.connectionState) {
-                //         case ConnectionState.none:
-                //         case ConnectionState.waiting:
-                //           return new CircularProgressIndicator();
-                //         default:
-                //           if (snapshot.hasError) {
-                //             return new Text('Error: ${snapshot.error}');
-                //           } else {
-                //             return _createListView(context, snapshot);
-                //           }
-                //       }
-                //     },
-                //   ),
-                // )
               ],
-            ))
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   children: <Widget>[
-        // TextField(
-        //   controller: nameController,
-        //   decoration: InputDecoration(
-        //     hintText: "真實姓名..",
-        //     suffixIcon: IconButton(
-        //       onPressed: _createUser(),
-        //       icon: Icon(Icons.done),
-        //     ),
-        //   ),
-        // ),
-        //     TextField(
-        //       controller: followeeController,
-        //       decoration: InputDecoration(
-        //         hintText: "關注姓名..",
-        //         suffixIcon: IconButton(
-        //           onPressed: _createFollow(),
-        //           icon: Icon(Icons.done),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-
-        // ElevatedButton(
-        //   onPressed: () {
-        //     // Navigate back to first route when tapped.
-        //   },
-        //   child: Text('Go back!'),
-        // ),
-        );
+            )));
   }
 
   Future<List<User>> _fetchUserList(String val) async {
@@ -460,23 +236,6 @@ class _FollowPageState extends State<FollowPage> {
     }
     return _userList;
   }
-
-  // Widget _createListView(BuildContext context, AsyncSnapshot snapshot) {
-  //   List<User> userList = snapshot.data;
-  //   return ListView.builder(
-  //     key: new PageStorageKey('user-list'),
-  //     itemCount: userList.length,
-  //     itemBuilder: (BuildContext context, int index) {
-  //       return new GestureDetector(
-  //         onTap: () {
-  //           followeeController.text = '${userList[index].name}';
-  //           _createFollow();
-  //         },
-  //         child: Text(userList[index].name),
-  //       );
-  //     },
-  //   );
-  // }
 
   _createUser() async {
     Response response;
