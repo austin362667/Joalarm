@@ -12,7 +12,7 @@ import 'package:joalarm/simple_animations_package.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:joalarm/messaging.dart';
 import 'package:joalarm/welcome.dart';
-import 'package:workmanager/workmanager.dart';
+// import 'package:workmanager/workmanager.dart';
 import 'package:joalarm/notification.dart' as notif;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,25 +23,25 @@ const fetchBackground = "fetchBackground";
 FirebaseMessaging _firebaseMessaging;
 bool isLike = false;
 
-void callbackDispatcher() {
-  Workmanager.executeTask((task, inputData) async {
-    switch (task) {
-      case fetchBackground:
-        //Geolocator geoLocator = Geolocator()..forceAndroidLocationManager = true;
-        Position userLocation = await Geolocator()
-            .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-        notif.Notification notification = new notif.Notification();
-        notification.showNotificationWithoutSound(userLocation);
-        // SharedPreferences prefs = await SharedPreferences.getInstance();
-        // String userId = prefs.getString('user_id');
-        // await _updateUserLocation(userLocation, userId);
-        await attemptUpdateUserLocation();
+// void callbackDispatcher() {
+//   Workmanager.executeTask((task, inputData) async {
+//     switch (task) {
+//       case fetchBackground:
+//         //Geolocator geoLocator = Geolocator()..forceAndroidLocationManager = true;
+//         Position userLocation = await Geolocator()
+//             .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//         notif.Notification notification = new notif.Notification();
+//         notification.showNotificationWithoutSound(userLocation);
+//         // SharedPreferences prefs = await SharedPreferences.getInstance();
+//         // String userId = prefs.getString('user_id');
+//         // await _updateUserLocation(userLocation, userId);
+//         await attemptUpdateUserLocation();
 
-        break;
-    }
-    return Future.value(true);
-  });
-}
+//         break;
+//     }
+//     return Future.value(true);
+//   });
+// }
 
 String serverResponse = 'Hi';
 Future<String> attemptGetUser() async {
@@ -127,16 +127,16 @@ class HomePage extends StatelessWidget {
     await attemptUpdateUserToken();
     await attemptCheckDistance();
     _firebaseMessaging = configureMessaging();
-    Workmanager.initialize(
-      callbackDispatcher,
-      isInDebugMode: true,
-    );
+    // Workmanager.initialize(
+    //   callbackDispatcher,
+    //   isInDebugMode: true,
+    // );
 
-    Workmanager.registerPeriodicTask(
-      "1",
-      fetchBackground,
-      frequency: Duration(minutes: 15),
-    );
+    // Workmanager.registerPeriodicTask(
+    //   "1",
+    //   fetchBackground,
+    //   frequency: Duration(minutes: 15),
+    // );
   }
 
   // @override
