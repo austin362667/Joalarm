@@ -1,8 +1,10 @@
 CREATE TABLE "USER" (
-  id serial PRIMARY KEY,
-  name varchar (30) NOT NULL,
+  id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+  name TEXT NOT NULL,
+  password TEXT NOT NULL,
   location geography,
-  token varchar (300),
+  token TEXT,
+  image TEXT,
   cnt numeric DEFAULT 0
 );
 
@@ -11,9 +13,10 @@ UPDATE "USER" SET location = 'SRID=4326;POINT(0 0)' WHERE id = '2';
 SELECT * FROM "USER" u, "FOLLOW" f WHERE ST_DWithin ( u.location, geography (ST_Point(${long}, ${lat})), 10000) AND '${id}' = f.followee;
 
 CREATE TABLE "FOLLOW" (
-  id serial PRIMARY KEY,
-  follower serial,
-  followee serial
+  id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+  follower uuid,
+  followee uuid,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 

@@ -5,11 +5,20 @@ import 'package:http/http.dart';
 class User {
   final String id;
   final String name;
+  final String cnt;
+  final String token;
+  final String image;
 
-  User({this.id, this.name});
+  User({this.id, this.name, this.token, this.cnt, this.image});
 
   factory User.fromJson(Map<String, dynamic> json) {
-    return User(id: json['id'].toString(), name: json['name'].toString());
+    return User(
+      id: json['id'].toString(),
+      name: json['name'].toString(),
+      token: json['token'].toString(),
+      cnt: json['cnt'].toString(),
+      image: json['image'].toString(),
+    );
   }
 }
 
